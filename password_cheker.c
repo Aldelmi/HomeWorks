@@ -7,7 +7,7 @@
 int main(void){
 
     char password[100]="";
-    int ChLenth,ChUpper,ChLower,ChNumber,ChSymbol;
+    int ChLenth,ChUpper,ChLower,ChDigit,ChSymbol;
     int score=0;
     int valid=0;
 
@@ -15,7 +15,7 @@ int main(void){
     do{
         ChLenth=0;
         ChLower=0;
-        ChNumber=0;
+        ChDigit=0;
         ChSymbol=0;
         ChUpper=0;
         score =0;
@@ -29,11 +29,11 @@ int main(void){
             char c = password[i];
             if (isupper((unsigned char)c)) ChUpper=1;
             if (islower ((unsigned char)c)) ChLower =1;
-            if(isdigit((unsigned char )c)) ChNumber=1;
+            if(isdigit((unsigned char )c)) ChDigit=1;
             if (ispunct((unsigned char )c)) ChSymbol =1;
 
         }
-        score = ChLenth+ChLower+ChNumber+ChSymbol+ChUpper;
+        score = ChLenth+ChLower+ChDigit+ChSymbol+ChUpper;
         printf(" Score: %d/5\n",score);
         if (score == 5){
             printf(" Your Password is Strong ");
@@ -43,7 +43,7 @@ int main(void){
             if (ChLower != 1) printf(" Your password dont have Lower cases 'a-z'\n");
             if (ChUpper != 1) printf(" Your Password dont have Upper cases 'A-Z'\n");
             if (ChSymbol !=1) printf(" Your Password dont have Symbol '!@#$^&'\n");
-            if (ChNumber != 1) printf(" Your Password dont have numbers '0-9'\n");
+            if (ChDigit != 1) printf(" Your Password dont have Digits '0-9'\n");
          }
         }while (valid != 1);
     
