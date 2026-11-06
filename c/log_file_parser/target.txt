@@ -1,0 +1,25 @@
+192.168.1.10 - - [28/Oct/2026:10:15:23 +0300] "GET /index.html HTTP/1.1" 200 1043
+192.168.1.15 - - [28/Oct/2026:10:15:45 +0300] "GET /about HTTP/1.1" 200 512
+192.168.1.20 - - [28/Oct/2026:10:16:02 +0300] "POST /login HTTP/1.1" 200 256
+192.168.1.22 - - [28/Oct/2026:10:16:18 +0300] "POST /login HTTP/1.1" FAILED 128
+192.168.1.23 - - [28/Oct/2026:10:16:30 +0300] "POST /admin HTTP/1.1" 404 89
+192.168.1.25 - - [28/Oct/2026:10:17:05 +0300] "GET /contact HTTP/1.1" 200 721
+Oct 28 10:17:12 server sshd[1122]: Failed password for root from 10.0.0.45 port 4022 ssh2
+Oct 28 10:17:15 server sshd[1123]: Failed password for admin from 10.0.0.45 port 4023 ssh2
+192.168.1.30 - - [28/Oct/2026:10:17:45 +0300] "GET /dashboard HTTP/1.1" 200 2048
+192.168.1.33 - - [28/Oct/2026:10:18:02 +0300] "GET /wp-admin HTTP/1.1" 404 156
+192.168.1.35 - - [28/Oct/2026:10:18:20 +0300] "GET /images/logo.png HTTP/1.1" 200 4096
+192.168.1.40 - - [28/Oct/2026:10:19:11 +0300] "POST /login HTTP/1.1" FAILED 128
+192.168.1.40 - - [28/Oct/2026:10:19:25 +0300] "POST /login HTTP/1.1" FAILED 128
+192.168.1.40 - - [28/Oct/2026:10:19:40 +0300] "POST /login HTTP/1.1" FAILED 128
+192.168.1.41 - - [28/Oct/2026:10:20:05 +0300] "GET /api/users HTTP/1.1" 200 1534
+192.168.1.45 - - [28/Oct/2026:10:20:33 +0300] "GET /backup.zip HTTP/1.1" 404 92
+192.168.1.50 - - [28/Oct/2026:10:21:10 +0300] "GET /page?port=4040 HTTP/1.1" 200 345
+192.168.1.52 - - [28/Oct/2026:10:21:44 +0300] "GET /page/1404 HTTP/1.1" 200 678
+Oct 28 10:22:01 server sshd[1200]: Failed password for oracle from 10.0.0.88 port 5011 ssh2
+192.168.1.60 - - [28/Oct/2026:10:22:35 +0300] "DELETE /api/data HTTP/1.1" 200 22
+192.168.1.61 - - [28/Oct/2026:10:23:00 +0300] "GET /admin/config.php HTTP/1.1" 404 71
+192.168.1.65 - - [28/Oct/2026:10:23:30 +0300] "POST /upload HTTP/1.1" 200 5120
+192.168.1.70 - - [28/Oct/2026:10:24:15 +0300] "GET /.env HTTP/1.1" 404 45
+192.168.1.75 - - [28/Oct/2026:10:25:00 +0300] "GET /robots.txt HTTP/1.1" 200 78
+192.168.1.80 - - [28/Oct/2026:10:25:30 +0300] "POST /login HTTP/1.1" FAILED 128
