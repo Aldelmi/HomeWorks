@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>api_tester</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Consolas, Monaco, monospace; background: #0a0e14; color: #b3b1ad; font-size: 13px; }
+.topbar { background: #131721; padding: 10px 20px; border-bottom: 1px solid #1f2430; display: flex; align-items: center; gap: 16px; }
+.topbar h1 { font-size: 14px; color: #39bae6; font-weight: normal; letter-spacing: 1px; }
+.topbar .tag { font-size: 10px; padding: 2px 8px; background: #1f2430; color: #e6b450; }
+.main { padding: 20px; }
+.bar { display: flex; margin-bottom: 14px; }
+.bar select { background: #131721; color: #ff7733; border: 1px solid #1f2430; border-right: none; padding: 8px 14px; font-family: inherit; font-size: 13px; outline: none; }
+.bar input { flex: 1; background: #0d1117; color: #b3b1ad; border: 1px solid #1f2430; padding: 8px 12px; font-family: inherit; font-size: 13px; outline: none; }
+.bar button { background: #1f6feb; color: #fff; border: none; padding: 8px 28px; font-family: inherit; cursor: pointer; font-size: 13px; letter-spacing: 1px; }
+.bar button:active { background: #1858c4; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.panel { background: #0d1117; border: 1px solid #1f2430; }
+.head { padding: 8px 12px; background: #131721; border-bottom: 1px solid #1f2430; color: #e6b450; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; align-items: center; }
+.body { padding: 12px; }
+.field { margin-bottom: 12px; }
+.field label { display: block; color: #626a73; font-size: 11px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.field input, .field textarea { width: 100%; background: #0a0e14; color: #b3b1ad; border: 1px solid #1f2430; padding: 8px; font-family: inherit; font-size: 12px; outline: none; }
+.field input:focus, .field textarea:focus { border-color: #1f6feb; }
+.field textarea { height: 160px; resize: vertical; }
+.badge { padding: 3px 10px; font-size: 11px; }
+.badge.ok { background: rgba(125,187,111,.15); color: #7dbb6f; }
+.badge.err { background: rgba(246,101,101,.15); color: #f66565; }
+.badge.idle { background: #1f2430; color: #626a73; }
+pre { margin: 0; padding: 12px; font-size: 12px; color: #b3b1ad; white-space: pre-wrap; word-break: break-all; min-height: 300px; overflow: auto; background: #0a0e14; font-family: inherit; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>api_tester</h1>
+  <span class="tag">v1.0</span>
+</div>
+
+<div class="main">
+  <div class="bar">
+    <select id="method">
+      <option>GET</option>
+      <option>POST</option>
+      <option>PUT</option>
+      <option>DELETE</option>
+    </select>
+    <input type="text" id="url" value="api.php">
+    <button onclick="send()">SEND</button>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <div class="head">request</div>
+      <div class="body">
+        <div class="field">
+          <label>query</label>
+          <input type="text" id="query" placeholder="?name=test">
+        </div>
+        <div class="field">
+          <label>authorization</label>
+          <input type="text" id="auth" placeholder="Bearer token">
+        </div>
+        <div class="field">
+          <label>body</label>
+          <textarea id="body">{ "username": "ahmed" }</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="head">
+        <span>response</span>
+        <span id="status" class="badge idle">idle</span>
+      </div>
+      <pre id="resp">waiting...</pre>
+    </div>
+  </div>
+</div>
+
+<script>
+function send() {
+  const m  = document.getElementById('method').value;
+  const u  = document.getElementById('url').value + document.getElementById('query').value;
+  const a  = document.getElementById('auth').value;
+  const b  = document.getElementById('body').value;
+  const st = document.getElementById('status');
+  const rp = document.getElementById('resp');
+
+  const opts = { method: m, headers: {} };
+  if (a) opts.headers['Authorization'] = a;
+  if (m === 'POST' || m === 'PUT') {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = b;
+  }
+
+  st.className = 'badge idle';
+  st.textContent = 'loading';
+  rp.textContent = '';
+
+  const t0 = performance.now();
+  fetch(u, opts)
+    .then(r => {
+      const ms = Math.round(performance.now() - t0);
+      st.className = 'badge ' + (r.ok ? 'ok' : 'err');
+      st.textContent = r.status + ' ' + r.statusText + ' / ' + ms + 'ms';
+      return r.text();
+    })
+    .then(t => {
+      try { rp.textContent = JSON.stringify(JSON.parse(t), null, 2); }
+      catch { rp.textContent = t; }
+    })
+    .catch(e => {
+      st.className = 'badge err';
+      st.textContent = 'network fail';
+      rp.textContent = e.toString();
+    });
+}
+</script>
+
+</body>
+</html>

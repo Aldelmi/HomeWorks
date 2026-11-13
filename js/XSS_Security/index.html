@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DOM XSS demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; max-width: 700px; }
+        input[type=text] { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
+        button { padding: 8px 14px; margin-right: 6px; cursor: pointer; }
+        .box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 40px;
+            margin-top: 6px;
+            background: #f9f9f9;
+        }
+        .bad  { border-color: #d33; background: #fff0f0; }
+        .good { border-color: #3a3; background: #f0fff0; }
+        small { color: #666; }
+    </style>
+</head>
+<body>
+
+<h2>DOM XSS Playground</h2>
+
+<input type="text" id="inp" placeholder="type something here...">
+<br>
+<button onclick="doUnsafe()">Render UNSAFE (innerHTML)</button>
+<button onclick="doSafe()">Render SAFE (textContent)</button>
+<button onclick="clearAll()">Clear</button>
+
+<hr>
+
+<p><b>Unsafe output (innerHTML):</b></p>
+<div id="out_unsafe" class="box bad">nothing yet</div>
+
+<p><b>Safe output (textContent):</b></p>
+<div id="out_safe" class="box good">nothing yet</div>
+
+<script>
+    const inp        = document.getElementById("inp");
+    const out_unsafe = document.getElementById("out_unsafe");
+    const out_safe   = document.getElementById("out_safe");
+
+    function doUnsafe() {
+        const value = inp.value;
+        console.log("unsafe input:", value);   
+        out_unsafe.innerHTML = value;
+    }
+
+
+    function doSafe() {
+        const value = inp.value;
+        out_safe.textContent = value;
+    }
+
+    function clearAll() {
+        inp.value = "";
+        out_unsafe.textContent = "nothing yet";
+        out_safe.textContent   = "nothing yet";
+    }
+</script>
+
+</body>
+</html>
